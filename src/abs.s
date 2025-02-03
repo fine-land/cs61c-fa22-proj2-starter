@@ -9,10 +9,12 @@
 #   None
 # =================================================================
 abs:
-    # Prologue
-
-    # PASTE HERE
-
-    # Epilogue
-
-    jr ra
+ ebreak
+ lw t0 0(a0)
+ blt zero t0 done
+ 
+ sub t0 x0 t0 
+ 
+ done:
+  sw t0 0(a0)
+  ret
