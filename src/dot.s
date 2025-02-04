@@ -23,12 +23,12 @@ dot:
  blt a3 t0 E2    # if a3 < 1 || a4 < 1
  blt a4 t0 E2
  
+li t5 0
 li t0 0   # iterator for array1
 li t1 0   # iterator for array2
 li t2 0   # sum of dot
 Loop:
- beq t0 a2 Done
- beq t1 a2 Done
+ beq t5 a2 Done
  
  # load array1[k1] && array2[k2]
  slli t3 t0 2  # t3 = 4*k
@@ -44,6 +44,7 @@ Loop:
  
  add t0 t0 a3
  add t1 t1 a4
+ addi t5 t5 1
  j Loop
  
 E1:
