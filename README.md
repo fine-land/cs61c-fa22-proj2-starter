@@ -3,6 +3,6 @@
 Spec: [https://cs61c.org/fa22/projects/proj2/](https://cs61c.org/fa22/projects/proj2/)
 
 # Now
-- PartA done
+- PartA done \n
 其中task6 test，懒得写了，错误语句没有覆盖到；
 
