@@ -24,17 +24,62 @@
 # ==============================================================================
 write_matrix:
 
-    # Prologue
+addi sp sp -28
+sw a0 0(sp)
+sw a1 4(sp)
+sw a2 8(sp)
+sw a3 12(sp)
+sw ra 16(sp)
+sw s0 24(sp)
+
+li a1 1 # read only
+jal fopen  # fopen(filename, flag)
+li a1 -1
+beq a0 a1 FopenError
+sw a0 20(sp) # sw fd
+
+# fwrite(fd, buffer, num bytes) write row && col
+addi a1 sp 8
+li a2 2
+li a3 4
+
+jal fwrite
+
+li a1 2
+bne a0 a1 FwriteError
+
+# fwrite all elements
+lw a0 20(sp)
+lw a1 4(sp)
+lw a2 8(sp)
+lw a3 12(sp)
+mul a2 a2 a3
+mv s0 a2 # save total items
+li a3 4
+
+jal fwrite
+
+bne a0 s0 FwriteError
+
+lw a0 20(sp) # load fd
+jal fclose
+bne a0 zero FcloseError
 
 
+lw ra 16(sp)
+lw s0 24(sp)
+addi sp sp 28
 
+ret
 
+FopenError:
+li a0 27
+j exit
 
+FwriteError:
+li a0 30
+j exit
 
-
-
-
-    # Epilogue
-
-
-    jr ra
+FcloseError:
+li a0 28
+j exit
